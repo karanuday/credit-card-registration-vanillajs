@@ -65,7 +65,7 @@ function listCards() {
   for (let card of cardList) {
     let li = createListElement(card.name, card.cardNo);
     const logo = document.createElement('img');
-    logo.setAttribute('src', `logos${card.issuer}-logo.png`);
+    logo.setAttribute('src', `logos/${card.issuer}-logo.png`);
     logo.setAttribute('alt', card.issuer);
     logo.setAttribute('id', 'saved-card-logo');
     li.appendChild(logo);
