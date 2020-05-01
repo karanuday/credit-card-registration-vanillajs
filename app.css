@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: black;
+}
+
+:focus {
+  outline: none;
+}
+
+:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+}
+
+ul {
+  padding-left: 0px;
+  list-style-type: none;
+}
+
+#card-list {
+  margin: 20px 0;
+  width: 100%;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+li#card-item {
+  border: 1px solid #faf9f9;
+  border-radius: 5px;
+  box-shadow: 3px 3px 6px #dcdada;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  margin: 15px auto;
+  width: 95%;
+  text-align: left;
+}
+
+#name-detail {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+#num-detail {
+  line-height: 40px;;
+}
+
+#parent {
+  width: 500px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  text-align: center;
+}
+#form1 {
+  display: none;
+  background: #2E323C;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 30px 80px;
+  text-align: center;
+}
+
+#submit-btn, #cancel-btn, #newCardBtn {
+  margin: 20px 10px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  width: 100px;
+  border-radius: 5px;
+  color: white;
+}
+
+#submit-btn {
+  background: #48c774;
+}
+
+#cancel-btn {
+  background: transparent;
+    border: 1px solid red;
+    color: red;
+}
+
+#newCardBtn {
+  width: 50%;
+  background: #46ccda;
+}
+
+#form-footer {
+  text-align: center;
+  clear: both;
+}
+
+.form-input, .cvv-input {
+  margin: 5px 0 20px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  box-sizing: border-box;
+  font-size: 16px;
+  width: 100%;
+}
+
+.cvv-input {
+  width: 100px !important;
+}
+
+div#card-input {
+  position: relative;
+}
+
+#issuer-logo {
+  height: 30px;
+  width: auto;
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  visibility: hidden;
+}
+
+#saved-card-logo {
+  float: right;
+  width: auto;
+  height: 35px;
+}
+
+.form-label {
+  /* float: left; */
+  font-size: 16px;
+  font-weight: bold;
+  color: #bbbbbb;
+}

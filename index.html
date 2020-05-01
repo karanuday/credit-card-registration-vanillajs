@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <noscript>Sorry, your browser does not support JavaScript!</noscript>
+  </head>
+  <body>
+    <div id="parent">
+      <form id="form1" onsubmit="validateAndSubmit(event)">
+        <h1 style="margin-top: 0; color: #50b1f2; margin-bottom: 40px;">Payment Details</h1>
+        <label for="name" class="form-label">Name on card</label><br />
+        <input type="text" id="name" value=""
+          required
+          class="form-input" placeholder="Name"
+          ><br />
+
+        <label for="cardNo" class="form-label">Card Number</label><br />
+        <div id="card-input">
+          <img id="issuer-logo" src="" title=""></img>
+          <input type="text" id="cardNo" value=""
+            pattern="[\d\s]+"
+            maxlength="19"
+            class="form-input" placeholder="57XX-XX32-123"
+            oninput="cardFormatter(event)"
+            onkeydown="formatter(event, this)"
+            required
+            >
+        </div>
+        <br />
+        <div style="float: left;">
+          <label for="expiry" class="form-label">Expiry</label><br />
+          <input type="text" id="expiry" value=""
+            maxlength="5"
+            required
+            oninput="dateFormatter(event)"
+            onkeydown="formatter(event, this)"
+            class="cvv-input" placeholder="MM/YY"
+          />
+        </div>
+        <div style="float: right;">
+          <label for="cvv" class="form-label">CVV</label><br />
+          <input type='password' id="cvv" value=""
+            maxlength="3"
+            required
+            class="cvv-input" placeholder="CVV"
+          />
+        </div>
+        <div id="form-footer">
+          <button type="button" id="cancel-btn" onclick="cancelAddOp()">Cancel</button>
+          <button type="submit" id="submit-btn">Add Card</button>
+        </div>
+      </form>
+      <div>
+        <h2>Your Cards:</h2>
+        <ul id="card-list"></ul>
+        <button id="newCardBtn" onclick="addNewCard(this)">Add New Card</button>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
