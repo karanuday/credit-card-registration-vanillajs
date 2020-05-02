@@ -100,7 +100,7 @@ class Card {
   addToStorage() {
     // Adds card details to localStorage
     let cardList = JSON.parse(window.localStorage.getItem("cardList") || "[]");
-    if (cardList.find(card => this.number === card.number)) {
+    if (cardList.find(card => this.number === card._number)) {
       alert('Card already exists');
       return false;
     }
@@ -240,7 +240,6 @@ function validateAndSubmit(event) {
       event.preventDefault();
       return false;
     }
-    console.log(newCard);
     const added = newCard.addToStorage();
     if (!added) {
       event.preventDefault();
