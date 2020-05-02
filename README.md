@@ -33,3 +33,10 @@ https://www.getcreditcardnumbers.com/
 6. Expiry Date validation
 7. Auto-enabling CVV and Expiry only of card number input
 
+# Known Issues:
+
+1. Card number and expiry date input fields cannot be edited from any position in text due to external formatting code that resets the cursor to the end of the text.
+- Current workaround: 
+ a. Copy pasting entire card number or expiry date values
+ b. typing values from the start
+
