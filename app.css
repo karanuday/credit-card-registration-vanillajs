@@ -41,6 +41,13 @@ li#card-item {
   text-align: left;
 }
 
+#empty-list-msg {
+  font-weight: bold;
+  line-height: 30px;
+  font-size: 20px;
+  color: #8b8b8b;
+}
+
 #name-detail {
   display: block;
   font-size: 20px;
@@ -51,6 +58,12 @@ li#card-item {
 #num-detail {
   line-height: 20px;
   font-size: 20px;
+  margin-right: 45px;
+}
+
+#expiry-detail {
+  font-style: italic;
+  font-size: 16px;
 }
 
 #parent {
