@@ -1,48 +1,57 @@
 
-cards = [{
+let cards = [{
   issuer: 'visa',
   name: 'Visa',
-  length: 16,
+  cardLength: 16,
+  cvvLen: 3, 
   pattern: '4[0-9]{12}(?:[0-9]{3})?',
   issuerPattern: '4[0-9]',
 }, {
   issuer: 'master',
   name: 'Master Card',
-  length: 16,
+  cardLength: 16,
+  cvvLen: 3, 
   pattern: '(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}',
   issuerPattern: '(5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)',
 }, {
   issuer: 'maestro',
   name: 'Maestro',
-  length: 16,
+  cardLength: 16,
+  cvvLen: 3, 
   pattern: '(?:5018|5020|5038|6304|6759|6761|6763)\d{12}',
   issuerPattern: '(5018|5020|5038|6304|6759|6761|6763)',
 }, {
   issuer: 'amex',
   name: 'American Express',
-  length: 15,
+  cardLength: 15,
+  cvvLen: 4, 
   pattern: '3[47][0-9]{13}',
   issuerPattern: '3[4-7]',
 }, {
   issuer: 'diners',
   name: 'Diners Club',
-  length: 14,
+  cardLength: 14,
+  cvvLen: 3, 
   pattern: '3(?:0[0-5]|[68][0-9])[0-9]{11}',
   issuerPattern: '3(?:0[0-5]|[68][0-9])',
 }, {
   issuer: 'discover',
   name: 'Discover',
-  length: 16,
+  cardLength: 16,
+  cvvLen: 3, 
   pattern: '6(?:011|5[0-9]{2})[0-9]{12}',
   issuerPattern: '6(?:011|5[0-9]{2})',
 }, {
   issuer: 'jcb',
   name: 'JCB',
-  length: 15,
+  cardLength: 15,
+  cvvLen: 3, 
   pattern: '(?:2131|1800|35\d{3})\d{11}',
   issuerPattern: '(?:2131|1800|35\d{3})',
 }];
+
 let issuingCard = '';
+
 function addNewCard(button) {
   const formElement = document.getElementById('form1');
   formElement.style.display = 'block';
@@ -54,25 +63,47 @@ function cancelAddOp() {
   formElement.style.display = 'none';
   addBtn.style.display = 'inline-block';
 }
+function deleteFuncGenerator(cardToDel) {
+  return function deleteCard() {
+    const res = window.prompt("Are you sure you want to delete this card? 'Y' or 'N'");
+    console.log(res);
+    if (res && (res == 'Y' || res == 'y')) {
+      let cardList = JSON.parse(localStorage.getItem("cardList") || "[]");
+      let idx = cardList.findIndex(card => card.cardNo === cardToDel.cardNo);
+      if (idx > -1) {
+        cardList.splice(idx, 1);
+        localStorage.setItem('cardList', JSON.stringify(cardList));
+        setTimeout(listCards, 500);
+        return true;
+      } else {
+        alert('Unable to delete card!');
+        return false;
+      }
+    }
+  }
+}
 function listCards() {
   let ul = document.getElementById('card-list');
+  ul.innerHTML = '';
   let cardList = JSON.parse(localStorage.getItem("cardList") || "[]");
   if (!cardList.length) {
-    let li = createListElement('No cards found! <br /> Feel free to add one from above.');
+    let li = createListElement('No cards found! <br /> Add a new card to the list', '', false);
     li.style.textAlign = 'center';
     ul.appendChild(li);
   }
   for (let card of cardList) {
-    let li = createListElement(card.name, card.cardNo);
+    let li = createListElement(card.name, card.cardNo, true, deleteFuncGenerator(card));
     const logo = document.createElement('img');
-    logo.setAttribute('src', `logos/${card.issuer}-logo.png`);
-    logo.setAttribute('alt', card.issuer);
-    logo.setAttribute('id', 'saved-card-logo');
+    Object.assign(logo, {
+      src: `assets/${card.issuer}-logo.png`,
+      alt: card.issuer,
+      id: 'saved-card-logo',
+    });
     li.appendChild(logo);
     ul.appendChild(li);
   }
 }
-function createListElement(text, subText) {
+function createListElement(text, subText, canDelete, deleteFn) {
   let li = document.createElement('li');
   li.setAttribute('id', 'card-item');
   if (text) {
@@ -87,12 +118,26 @@ function createListElement(text, subText) {
     subTextSpan.innerHTML = subText;
     li.appendChild(subTextSpan);
   }
+  if (canDelete) {
+    let deleteBtn = document.createElement('button');
+    Object.assign(deleteBtn, {
+      id: 'delete-btn',
+      innerText: 'Delete Card',
+      onclick: deleteFn,
+    });
+    li.appendChild(deleteBtn);
+  }
   return li;
 }
 function addToStorage(cardDetails) {
   let cardList = JSON.parse(localStorage.getItem("cardList") || "[]");
+  if (cardList.find(card => card.cardNo === cardDetails.cardNo)) {
+    alert('Card already exists');
+    return false;
+  }
   cardList.push(cardDetails);
   localStorage.setItem('cardList', JSON.stringify(cardList));
+  return true;
 }
 function validateAndSubmit(event) {
   var form = document.getElementById('form1');
@@ -111,7 +156,11 @@ function validateAndSubmit(event) {
     event.preventDefault();
     return false;
   }
-  addToStorage(cardDetails);
+  const added = addToStorage(cardDetails);
+  if (!added) {
+    event.preventDefault();
+    return false;
+  }
   listCards();
 }
 function isValidExpiry(str) {
@@ -172,7 +221,11 @@ function setIssuer(cardNumber) {
   }
   let issuerEl = document.getElementById('issuer-logo');
   if (issueCard) {
-    issuerEl.setAttribute('src', `logos/${issueCard.issuer}-logo.png`);
+    cardNumField.maxLength = issueCard.cardLength + 3; // '+3' to account for spaces
+    let cvvInput = document.getElementById('cvv');
+    cvvInput.maxLength = issueCard.cvvLen;
+    cvvInput.minLength = issueCard.cvvLen;
+    issuerEl.setAttribute('src', `assets/${issueCard.issuer}-logo.png`);
     issuerEl.setAttribute('title', issueCard.name);
     issuerEl.style.visibility = 'visible';
   } else {
@@ -183,14 +236,24 @@ function setIssuer(cardNumber) {
 function cardFormatter(event) {
   str = cardNumField.value;
   if (!str) {
+    toggleInputs(true);
     return false;
   }
+  toggleInputs(false);
   var v = str.replace(/[^\d]/g, '');
   if (v.length >= 4) issuingCard = setIssuer(v);
   v = v.replace(/.{4}/g, function (a) {
     return a + ' ';
   });
   cardNumField.value = v;
+}
+function toggleInputs(disable) {
+  let expiry = document.getElementById('expiry');
+  let cvv = document.getElementById('cvv');
+  let submitBtn = document.getElementById('submit-btn');
+  expiry.disabled = disable;
+  cvv.disabled = disable;
+  submitBtn.disabled = disable;
 }
 var cardNumField = document.getElementById('cardNo');
 listCards();

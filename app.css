@@ -14,7 +14,7 @@ body {
 
 :disabled {
   cursor: not-allowed !important;
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 ul {
@@ -30,6 +30,7 @@ ul {
 }
 
 li#card-item {
+  position: relative;
   border: 1px solid #faf9f9;
   border-radius: 5px;
   box-shadow: 3px 3px 6px #dcdada;
@@ -48,7 +49,8 @@ li#card-item {
 }
 
 #num-detail {
-  line-height: 40px;;
+  line-height: 20px;
+  font-size: 20px;
 }
 
 #parent {
@@ -57,6 +59,7 @@ li#card-item {
   box-sizing: border-box;
   text-align: center;
 }
+
 #form1 {
   display: none;
   background: #2E323C;
@@ -67,14 +70,14 @@ li#card-item {
   text-align: center;
 }
 
-#submit-btn, #cancel-btn, #newCardBtn {
-  margin: 20px 10px;
+.btn {
   cursor: pointer;
+  border-radius: 5px;
+  margin: 20px 10px;
   padding: 10px;
   font-size: 16px;
   border: none;
   width: 100px;
-  border-radius: 5px;
   color: white;
 }
 
@@ -84,8 +87,26 @@ li#card-item {
 
 #cancel-btn {
   background: transparent;
-    border: 1px solid red;
-    color: red;
+  border: 1px solid red;
+  color: red;
+}
+
+#delete-btn {
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+  background: transparent;
+  font-size: 14px;
+  padding: 5px;
+  width: 100%;
+  border: 2px solid red;
+  color: red;
+}
+
+#delete-btn:hover {
+  transition: background 0.5s;
+  background: red;
+  color: white;
 }
 
 #newCardBtn {
@@ -126,13 +147,14 @@ div#card-input {
 }
 
 #saved-card-logo {
-  float: right;
+  position: absolute;
+  top: 40px;
+  right: 20px;
   width: auto;
   height: 35px;
 }
 
 .form-label {
-  /* float: left; */
   font-size: 16px;
   font-weight: bold;
   color: #bbbbbb;

@@ -35,6 +35,7 @@
           <label for="expiry" class="form-label">Expiry</label><br />
           <input type="text" id="expiry" value=""
             maxlength="5"
+            disabled
             required
             oninput="dateFormatter(event)"
             onkeydown="formatter(event, this)"
@@ -44,20 +45,21 @@
         <div style="float: right;">
           <label for="cvv" class="form-label">CVV</label><br />
           <input type='password' id="cvv" value=""
+            disabled
             maxlength="3"
             required
             class="cvv-input" placeholder="CVV"
           />
         </div>
         <div id="form-footer">
-          <button type="button" id="cancel-btn" onclick="cancelAddOp()">Cancel</button>
-          <button type="submit" id="submit-btn">Add Card</button>
+          <button type="button" id="cancel-btn" class="btn" onclick="cancelAddOp()">Cancel</button>
+          <button type="submit" id="submit-btn" class="btn" disabled>Add Card</button>
         </div>
       </form>
       <div>
+        <button id="newCardBtn" class="btn" onclick="addNewCard(this)">Add New Card</button>
         <h2>Your Cards:</h2>
         <ul id="card-list"></ul>
-        <button id="newCardBtn" onclick="addNewCard(this)">Add New Card</button>
       </div>
     </div>
     <script src="app.js"></script>
