@@ -172,3 +172,20 @@ div#card-input {
   font-weight: bold;
   color: #bbbbbb;
 }
+
+@media only screen and (max-width: 550px) {
+  #parent { width: 450px; }
+  #form1 {
+    width: 90%;
+    margin: auto;
+    padding: 30px;
+  }
+  #expiry-detail {
+    display: block;
+    margin-top: 10px;
+  }
+} 
+@media only screen and (max-width: 375px) {
+  /* For mobile phones: */
+  #parent { width: 360px; }
+}
